@@ -1,0 +1,22 @@
+﻿Compilación iniciada a las 25/01/2017 13:07:46.
+     1>Proyecto "C:\Users\Pablo\Desktop\Master\G3D\P5\Visual2013\P3GLSL\P3GLSL.vcxproj" en el nodo 2 (Build destinos).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\libs\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt scr\GLSLProgram.cpp scr\main.cpp
+         main.cpp
+     1>c:\users\pablo\desktop\master\g3d\p5\visual2013\p3glsl\scr\main.cpp(364): warning C4244: 'inicializando' : conversión de 'double' a 'float'; posible pérdida de datos
+     1>c:\users\pablo\desktop\master\g3d\p5\visual2013\p3glsl\scr\main.cpp(371): warning C4244: '=' : conversión de 'double' a 'float'; posible pérdida de datos
+     1>c:\users\pablo\desktop\master\g3d\p5\visual2013\p3glsl\scr\main.cpp(378): warning C4244: '=' : conversión de 'double' a 'float'; posible pérdida de datos
+     1>c:\users\pablo\desktop\master\g3d\p5\visual2013\p3glsl\scr\main.cpp(393): warning C4305: '+=' : truncamiento de 'double' a 'float'
+     1>c:\users\pablo\desktop\master\g3d\p5\visual2013\p3glsl\scr\main.cpp(396): warning C4305: '-=' : truncamiento de 'double' a 'float'
+         GLSLProgram.cpp
+         Generando código...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Pablo\Desktop\Master\G3D\P5\Visual2013\P3GLSL\Debug\P3GLSL.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\libs\lib FreeImage.lib opengl32.lib freeglut.lib glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Pablo\Desktop\Master\G3D\P5\Visual2013\P3GLSL\Debug\P3GLSL.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Pablo\Desktop\Master\G3D\P5\Visual2013\P3GLSL\Debug\P3GLSL.lib" /MACHINE:X86 /SAFESEH Debug\auxiliar.obj
+         Debug\GLSLProgram.obj
+         Debug\main.obj
+         P3GLSL.vcxproj -> C:\Users\Pablo\Desktop\Master\G3D\P5\Visual2013\P3GLSL\Debug\P3GLSL.exe
+     1>Compilación del proyecto terminada "C:\Users\Pablo\Desktop\Master\G3D\P5\Visual2013\P3GLSL\P3GLSL.vcxproj" (Build destinos).
+
+Compilación correcta.
+
+Tiempo transcurrido 00:00:01.95
