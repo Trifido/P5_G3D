@@ -1,16 +1,4 @@
 #include "GLSLProgram.h"
-#include "auxiliar.h"
-
-#include <windows.h>
-
-#include <gl/glew.h>
-#include <gl/gl.h>
-#define SOLVE_FGLUT_WARNING
-#include <gl/freeglut.h> 
-#include <iostream>
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 void GLSLProgram::InitShader(const char *vname, const char *fname){
 	//Creamos un shader de vertices y de fragmentos

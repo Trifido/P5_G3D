@@ -18,6 +18,18 @@
     <ClInclude Include="scr\GLSLProgram.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="scr\Mesh.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Texture.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\Camera.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="scr\GEngine.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scr\main.cpp">
@@ -27,6 +39,15 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="scr\GLSLProgram.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\Mesh.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\Texture.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\Camera.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
