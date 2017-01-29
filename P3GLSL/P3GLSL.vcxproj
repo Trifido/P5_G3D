@@ -16,6 +16,7 @@
     <ClInclude Include="scr\Camera.h" />
     <ClInclude Include="scr\GEngine.h" />
     <ClInclude Include="scr\GLSLProgram.h" />
+    <ClInclude Include="scr\Light.h" />
     <ClInclude Include="scr\Mesh.h" />
     <ClInclude Include="scr\Texture.h" />
   </ItemGroup>
@@ -23,6 +24,7 @@
     <ClCompile Include="scr\auxiliar.cpp" />
     <ClCompile Include="scr\Camera.cpp" />
     <ClCompile Include="scr\GLSLProgram.cpp" />
+    <ClCompile Include="scr\Light.cpp" />
     <ClCompile Include="scr\main.cpp" />
     <ClCompile Include="scr\Mesh.cpp" />
     <ClCompile Include="scr\Texture.cpp" />

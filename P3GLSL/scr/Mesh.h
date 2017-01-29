@@ -26,10 +26,16 @@ class Mesh
 		Texture emiTex;
 		//Model matrix
 		glm::mat4 model;
+		//ProgramShaders
+		GLuint vao;
+		GLSLProgram *programa;
+
 
 	private:
-		void LoadVBO(unsigned int &VBO, int dataSize, float *vertexArray, int idAtrib);
-		void LoadIBO(unsigned int &IBO, int dataSize, float *indexArray);
+		void LoadVBO(unsigned int &VBO, int dataSize, const float *vertexArray, GLint size, int idAtrib);
+		void LoadIBO(unsigned int &IBO, int dataSize, const unsigned int *indexArray);
+		void Rotate(float &angle, glm::vec3 axis);
+		void Translate(glm::vec3 cord);
 
 	public:
 		Mesh();	//Default Mesh (Cube)
@@ -40,12 +46,15 @@ class Mesh
 		~Mesh();
 		
 		void Destroy(GLSLProgram &programa);
-		void Rotate(float angle, glm::vec3 axis);
-		void Translate(glm::vec3 cord);
+
+		void Rotation(float &angle, glm::vec3 axis);
+		void Orbit(float &internAngle, float &externAngle, glm::vec3 externRadius);
 		void InitRender(Camera &camera);
 		void Render();
 		void DefaultMeshRender();
+		void InitDefaultMesh();
 
+		inline void AddShader(GLSLProgram &ps) { programa = &ps; }
 		inline unsigned int GetEmiteId() { return emiTex.GetId(); }
 		inline unsigned int GetColorId() { return colorTex.GetId(); }
 };

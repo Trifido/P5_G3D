@@ -30,6 +30,9 @@
     <ClInclude Include="scr\GEngine.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="scr\Light.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scr\main.cpp">
@@ -48,6 +51,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="scr\Camera.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="scr\Light.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

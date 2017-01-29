@@ -1,1 +1,21 @@
-﻿
+﻿  Texture.cpp
+  Mesh.cpp
+c:\users\vicente\desktop\p5_g3d\p3glsl\scr\camera.h(23): warning C4305: 'initializing': truncation from 'double' to 'float'
+  GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  main.cpp
+c:\users\vicente\desktop\p5_g3d\p3glsl\scr\camera.h(23): warning C4305: 'initializing': truncation from 'double' to 'float'
+c:\users\vicente\desktop\p5_g3d\p3glsl\scr\main.cpp(161): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\vicente\desktop\p5_g3d\p3glsl\scr\main.cpp(169): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\vicente\desktop\p5_g3d\p3glsl\scr\main.cpp(185): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\vicente\desktop\p5_g3d\p3glsl\scr\main.cpp(188): warning C4305: '-=': truncation from 'double' to 'float'
+  Light.cpp
+  GLSLProgram.cpp
+  Camera.cpp
+c:\users\vicente\desktop\p5_g3d\p3glsl\scr\camera.h(23): warning C4305: 'initializing': truncation from 'double' to 'float'
+  GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  auxiliar.cpp
+  Generating Code...
+auxiliar.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  P3GLSL.vcxproj -> C:\Users\Vicente\Desktop\P5_G3D\P3GLSL\Debug\P3GLSL.exe
+  P3GLSL.vcxproj -> C:\Users\Vicente\Desktop\P5_G3D\P3GLSL\Debug\P3GLSL.pdb (Full PDB)

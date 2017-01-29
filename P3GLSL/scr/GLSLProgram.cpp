@@ -107,13 +107,10 @@ void GLSLProgram::UseProgram(){
 	glUseProgram(program);
 }
 
-void GLSLProgram::AddUnif(glm::mat4 &modelView, glm::mat4 &modelViewProj, glm::mat4 &normal, float &intensidad, glm::vec3 &posLigth){
-
+void GLSLProgram::AddUnif(glm::mat4 &modelView, glm::mat4 &modelViewProj, glm::mat4 &normal){
 	AddUnifMat4fvMV(modelView);
 	AddUnifMat4fvMVP(modelViewProj);
 	AddUnifMat4fvN(normal);
-	AddUnif3fv(posLigth);
-	AddUnif1f(intensidad);
 }
 
 void GLSLProgram::AddUnifMat4fvMV(glm::mat4 &mat){
@@ -128,11 +125,11 @@ void GLSLProgram::AddUnifMat4fvN(glm::mat4 &mat){
 	glUniformMatrix4fv(uNormalMat, 1, GL_FALSE, &(mat[0][0]));
 }
 
-void GLSLProgram::AddUnif3fv(glm::vec3 &vect){
+void GLSLProgram::AddUnif3fv(glm::vec3 vect){
 	glUniform3fv(posLuz, 1, &(vect[0]));
 }
 
-void GLSLProgram::AddUnif1f(float &f){
+void GLSLProgram::AddUnif1f(float f){
 	glUniform1f(inLuz, f);
 }
 
@@ -168,4 +165,9 @@ int GLSLProgram::getNormal(){
 
 int GLSLProgram::getTexCoord(){
 	return inTexCoord;
+}
+
+void GLSLProgram::AddLight(Light *light) {
+	AddUnif3fv((*light).GetPosition());
+	AddUnif1f((*light).GetIntensity());
 }
