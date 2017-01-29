@@ -125,6 +125,7 @@ void destroy(){
 
 void initObj()
 {
+	programa.AddLight(light1);
 	cube1.AddShader(programa);
 	cube2.AddShader(programa);
 	cube1.InitDefaultMesh();
@@ -158,7 +159,6 @@ void idleFunc()
 {
 	//Cambio la matriz model
 	static float angle = 0.0;
-	angle = (angle > 2.0f * 3.14159) ? 0.0 : angle + 0.1f;
 	angle += 0.1f;
 
 	cube1.Rotation(angle, glm::vec3(1.0f, 1.0f, 0));
@@ -167,38 +167,7 @@ void idleFunc()
 	glutPostRedisplay();
 }
 void keyboardFunc(unsigned char key, int x, int y){
-	//Primero -> actualizamo el valor
-
 	camera.MoveCamera(key);
-	light1.LightController(key);
-
-	//switch (key)
-	//{
-	//case '+':
-	//	valorIntensidad += 0.1;
-	//	break;
-	//case '-':
-	//	valorIntensidad -= 0.1;
-	//	break;
-	//case 'i':
-	//	lightCoord[1] += 0.1f;
-	//	break;
-	//case 'k':
-	//	lightCoord[1] -= 0.1f;
-	//	break;
-	//case 'j':
-	//	lightCoord[0] -= 0.1f;
-	//	break;
-	//case 'l':
-	//	lightCoord[0] += 0.1f;
-	//	break;
-	//default:
-	//	break;
-	//}
-
-	lightPos[0] = (camera.GetView() * glm::vec4(lightCoord[0], 1.0f, lightCoord[1], 1.0f)).x;
-	lightPos[1] = (camera.GetView() * glm::vec4(lightCoord[0], 0.0f, lightCoord[1], 1.0f)).y;
-	lightPos[2] = (camera.GetView() * glm::vec4(lightCoord[0], 1.0f, lightCoord[1], 1.0f)).z;
-	
+	light1.LightController(key, camera);
 }
 void mouseFunc(int button, int state, int x, int y){}

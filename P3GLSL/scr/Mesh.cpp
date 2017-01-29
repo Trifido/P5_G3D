@@ -16,8 +16,9 @@ void Mesh::InitRender(Camera &camera)
 	glm::vec3 lightPos = glm::vec3(1.0f);
 	float valorIntensidad = 0.5f;
 
-	(*programa).AddUnif(camera.GetModelView(), camera.GetModelViewProj(), camera.GetNormal(), valorIntensidad, lightPos);
+	(*programa).AddUnif(camera.GetModelView(), camera.GetModelViewProj(), camera.GetNormal());
 	(*programa).AddUnifTex(GetColorId(), GetEmiteId());
+	(*programa).AddUnifLight();
 }
 
 void Mesh::Render()

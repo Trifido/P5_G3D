@@ -167,7 +167,13 @@ int GLSLProgram::getTexCoord(){
 	return inTexCoord;
 }
 
-void GLSLProgram::AddLight(Light *light) {
-	AddUnif3fv((*light).GetPosition());
-	AddUnif1f((*light).GetIntensity());
+void GLSLProgram::AddLight(Light &light) {
+	lights.push_back(&light);
+}
+
+void GLSLProgram::AddUnifLight() {
+	for (int i = 0; i < lights.size(); i++) {
+		AddUnif3fv((*lights.at(i)).GetPosition());
+		AddUnif1f((*lights.at(i)).GetIntensity());
+	}
 }

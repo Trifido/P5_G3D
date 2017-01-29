@@ -2,10 +2,11 @@
 
 Light::Light() {
 	valorIntensidad = 0.5f;
-	lightCoord = glm::vec2(0.0f);
+	lightCoord = glm::vec3(0.0f);
+	lightPosShader = glm::vec3(1.0f);
 }
 
-void Light::MoveLight(unsigned char key) {
+void Light::MoveLight(unsigned char key, Camera camera) {
 	switch (key)
 	{
 		case 'i':
@@ -23,6 +24,17 @@ void Light::MoveLight(unsigned char key) {
 		default:
 			break;
 	}
+
+	/*glm::vec4 resultView = (camera.GetView() * glm::vec4(lightCoord[0], 1.0f, lightCoord[1], 1.0f));
+	lightPosShader[0] = resultView.x;
+	lightPosShader[1] = resultView.y;
+	lightPosShader[2] = resultView.z;*/
+
+	lightPosShader[0] = (camera.GetView() * glm::vec4(lightCoord[0], 1.0f, lightCoord[1], 1.0f)).x;
+	lightPosShader[1] = (camera.GetView() * glm::vec4(lightCoord[0], 1.0f, lightCoord[1], 1.0f)).y;
+	lightPosShader[2] = (camera.GetView() * glm::vec4(lightCoord[0], 1.0f, lightCoord[1], 1.0f)).z;
+
+	std::cout << "HOLA" << std::endl;
 }
 
 void Light::ChangeIntensity(unsigned char key) {
@@ -39,7 +51,7 @@ void Light::ChangeIntensity(unsigned char key) {
 	}
 }
 
-void Light::LightController(unsigned char key) {
-	MoveLight(key);
+void Light::LightController(unsigned char key, Camera camera) {
+	MoveLight(key, camera);
 	ChangeIntensity(key);
 }

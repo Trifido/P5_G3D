@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
+#include <vector>
 
 #include "auxiliar.h"
 #include "Light.h"
@@ -34,6 +35,9 @@ private:
 	int uColorTex;
 	int uEmiTex;
 
+	std::vector<Light*> lights;
+
+private:
 	GLuint LoadShader(const char *fileName, GLenum type);
 	
 	void AddUnif3fv(glm::vec3 vect);
@@ -50,14 +54,14 @@ public:
 	void AddUnifMat4fvMVP(glm::mat4 &mat);
 	void AddUnifMat4fvN(glm::mat4 &mat);
 	void AddUnifTex(unsigned int color, unsigned int emi);
+	void AddUnifLight();
 
 	int getPos();
 	int getColor();
 	int getNormal();
 	int getTexCoord();
 
-	void AddLight(Light *light);
-
+	void AddLight(Light &light);
 };
 
 
