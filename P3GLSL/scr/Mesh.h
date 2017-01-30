@@ -6,6 +6,12 @@
 #include "Texture.h"
 #include "Camera.h"
 
+#include <vector>
+
+//#include <assimp/Importer.hpp>      // C++ importer interface
+//#include <assimp/scene.h>           // Output data structure
+//#include <assimp/postprocess.h> 
+
 //enum Type
 //{
 //		ASSIMP_MODEL = 0,
@@ -21,15 +27,23 @@ class Mesh
 		unsigned int normalVBO;
 		unsigned int texCoordVBO;
 		unsigned int triangleIndexVBO;
+
 		//Textures
 		Texture colorTex;
 		Texture emiTex;
+
 		//Model matrix
 		glm::mat4 model;
-		//ProgramShaders
-		GLuint vao;
-		GLSLProgram *programa;
 
+		//ProgramShaders
+		GLuint		vao;
+		GLSLProgram	*programa;
+
+		//Assimp Mesh
+		float	*vertexArray;
+		float	*normalArray;
+		float	*uvArray;
+		int		numVerts;
 
 	private:
 		void LoadVBO(unsigned int &VBO, int dataSize, const float *vertexArray, GLint size, int idAtrib);
@@ -39,7 +53,6 @@ class Mesh
 
 	public:
 		Mesh();	//Default Mesh (Cube)
-//		Mesh(Type type, const char *filename);
 //		Mesh(Type type, const char *filename, const char *fileColorTex);
 ////		Mesh(Type type, const char *filename, const char *fileEmiTex);
 //		Mesh(Type type, const char *filename, const char *fileColorTex, const char *fileEmiTex);
@@ -57,6 +70,8 @@ class Mesh
 		inline void AddShader(GLSLProgram &ps) { programa = &ps; }
 		inline unsigned int GetEmiteId() { return emiTex.GetId(); }
 		inline unsigned int GetColorId() { return colorTex.GetId(); }
+
+		void ImportMesh(const std::string &pFile);
 };
 
 #endif

@@ -142,10 +142,6 @@ void renderFunc()
 	cube2.InitRender(camera);
 	cube2.DefaultMeshRender();
 
-	//Nos cepillamos el programa
-	glUseProgram(NULL);
-
-	//Siempre la última función
 	glutSwapBuffers();
 }
 

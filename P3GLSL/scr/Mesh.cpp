@@ -13,9 +13,6 @@ void Mesh::InitRender(Camera &camera)
 	camera.SetModelViewProj(camera.GetProj() * camera.GetView() * model);
 	camera.SetNormal(glm::transpose(glm::inverse(camera.GetModelView())));
 
-	glm::vec3 lightPos = glm::vec3(1.0f);
-	float valorIntensidad = 0.5f;
-
 	(*programa).AddUnif(camera.GetModelView(), camera.GetModelViewProj(), camera.GetNormal());
 	(*programa).AddUnifTex(GetColorId(), GetEmiteId());
 	(*programa).AddUnifLight();
@@ -31,6 +28,8 @@ void Mesh::DefaultMeshRender()
 	//Activamos el VAO del objeto, activandose todos los VBO 
 	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, cubeNTriangleIndex * 3, GL_UNSIGNED_INT, (void*)0);
+
+	glUseProgram(NULL);
 }
 
 void Mesh::LoadVBO(unsigned int &VBO, int dataSize, const float *vertexArray, GLint size, int idAtrib)
@@ -125,4 +124,41 @@ void Mesh::InitDefaultMesh() {
 	emiTex.LoadTexture("../img/emissive.png");
 
 	model = glm::mat4(1.0f);
+}
+
+void Mesh::ImportMesh(const std::string &pFile) {
+	//Assimp::Importer importer;
+	/*const aiScene *scene = importer.ReadFile(pFile, aiProcessPreset_TargetRealtime_Fast);
+
+	aiMesh *mesh = scene->mMeshes[0];
+
+	numVerts = mesh->mNumFaces * 3;
+
+	vertexArray = new float[mesh->mNumFaces * 3 * 3];
+	normalArray = new float[mesh->mNumFaces * 3 * 3];
+	uvArray = new float[mesh->mNumFaces * 3 * 2];
+
+	for (unsigned int i = 0; i<mesh->mNumFaces; i++)
+	{
+		const aiFace& face = mesh->mFaces[i];
+
+		for (int j = 0; j<3; j++)
+		{
+			aiVector3D uv = mesh->mTextureCoords[0][face.mIndices[j]];
+			memcpy(uvArray, &uv, sizeof(float) * 2);
+			uvArray += 2;
+
+			aiVector3D normal = mesh->mNormals[face.mIndices[j]];
+			memcpy(normalArray, &normal, sizeof(float) * 3);
+			normalArray += 3;
+
+			aiVector3D pos = mesh->mVertices[face.mIndices[j]];
+			memcpy(vertexArray, &pos, sizeof(float) * 3);
+			vertexArray += 3;
+		}
+	}
+
+	uvArray -= mesh->mNumFaces * 3 * 2;
+	normalArray -= mesh->mNumFaces * 3 * 3;
+	vertexArray -= mesh->mNumFaces * 3 * 3;*/
 }
