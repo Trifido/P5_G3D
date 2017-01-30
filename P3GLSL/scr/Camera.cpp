@@ -44,9 +44,9 @@ void Camera::RotateCamera()
 
 bool Camera::InitCamera() 
 {
-	this->proj = glm::perspective(glm::radians(60.0f), 1.0f, 1.0f, 50.0f);
+	this->proj = glm::perspective(glm::radians(60.0f), 1.0f, 0.1f, 50.0f);
 	this->view = glm::mat4(1.0f);
-	this->view[3].z = -300.0f;
+	this->view[3].z = -6.0f;
 
 	return true;
 }

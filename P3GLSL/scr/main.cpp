@@ -4,6 +4,7 @@
 #include "GLSLProgram.h"
 #include "BOX.h"
 #include "auxiliar.h"
+#include "Scene.h"
 
 #include <windows.h>
 
@@ -35,6 +36,8 @@ glm::vec2 lightCoord = glm::vec2(0.0f);
 glm::vec3 lightPos = glm::vec3(1.0f);
 
 GLSLProgram programa;
+
+Scene scene1;
 
 //Declaración de CB
 void renderFunc();
@@ -130,17 +133,30 @@ void initObj()
 	cube2.AddShader(programa);
 	cube1.InitDefaultMesh();
 	cube2.InitDefaultMesh();
+
+	scene1.AddObject(cube1);
+	scene1.AddObject(cube2);
+
+	scene1.AddLight(light1);
+	
+	scene1.AddCamera(camera);
+
 }
 
 void renderFunc()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	cube1.InitRender(camera);
+	scene1.Render();
+	/*scene1.getObject(0).InitRender(scene1.getCamera(0));
+	scene1.getObject(0).DefaultMeshRender();
+	scene1.getObject(1).InitRender(scene1.getCamera(0));
+	scene1.getObject(1).DefaultMeshRender();*/
+	/*cube1.InitRender(camera);
 	cube1.DefaultMeshRender();
 
 	cube2.InitRender(camera);
-	cube2.DefaultMeshRender();
+	cube2.DefaultMeshRender();*/
 
 	glutSwapBuffers();
 }
@@ -155,15 +171,17 @@ void idleFunc()
 {
 	//Cambio la matriz model
 	static float angle = 0.0;
-	angle += 0.1f;
+	angle += 0.001f;
 
 	cube1.Rotation(angle, glm::vec3(1.0f, 1.0f, 0));
 	cube2.Orbit(angle, angle, glm::vec3(3.0f, 0, 0));
 
 	glutPostRedisplay();
 }
+
 void keyboardFunc(unsigned char key, int x, int y){
 	camera.MoveCamera(key);
 	light1.LightController(key, camera);
 }
+
 void mouseFunc(int button, int state, int x, int y){}

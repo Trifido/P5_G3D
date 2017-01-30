@@ -1,0 +1,13 @@
+Recomendación:
+Scene singleton
+Método para eliminar objetos
+Diferenciar dir, puntual, focal(recomndable dividir en tres vectores por facilidad al pintar en el shader)
+pero es recomendable tener una luz ambiental para toda la escena
+Podemos limitar el número de luces de cada tipo
+
+Shader asociado al objeto, y no a la escena
+Consejo, que la clase Shader conozca TODOS los posibles artributos y var uniform que podríamos utilizar
+Y al comenzar preguntar por la localización, si devuelve -1, sabe que no se utilizan
+
+Comprobar que nuestra malla tiene todo lo necesario para el Shader
+Para no fallar, que la malla permita el uso de todo tipo de var (OBLiGATORIO matriz model)

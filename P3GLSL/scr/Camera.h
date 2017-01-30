@@ -1,6 +1,8 @@
 #ifndef _CAMERA_H
 #define _CAMERA_H
 
+#define GLM_FORCE_RADIANS
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
@@ -16,7 +18,7 @@ class Camera
 
 		float rotation;
 		float nearp = 1.0;
-		float farp = 500.0;
+		float farp = 50.0;
 		float pesoRGB = 0.5;
 		float pesoAlpha = 0.5;
 		float focalDistance = -25.0;

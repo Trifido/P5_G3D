@@ -33,6 +33,7 @@ class Light
 
 		inline glm::vec3 GetPosition() { return lightPosShader; }
 		inline float GetIntensity() { return valorIntensidad; }
+		inline int GetType() { return type; }
 };
 
 #endif

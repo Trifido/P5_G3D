@@ -18,6 +18,7 @@
     <ClInclude Include="scr\GLSLProgram.h" />
     <ClInclude Include="scr\Light.h" />
     <ClInclude Include="scr\Mesh.h" />
+    <ClInclude Include="scr\Scene.h" />
     <ClInclude Include="scr\Texture.h" />
   </ItemGroup>
   <ItemGroup>
@@ -27,6 +28,7 @@
     <ClCompile Include="scr\Light.cpp" />
     <ClCompile Include="scr\main.cpp" />
     <ClCompile Include="scr\Mesh.cpp" />
+    <ClCompile Include="scr\Scene.cpp" />
     <ClCompile Include="scr\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -51,7 +53,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -86,7 +88,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>FreeImage.lib;opengl32.lib;freeglut.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>FreeImage.lib;opengl32.lib;freeglut.lib;glew32.lib;assimp-vc120-mt.lib;zlibstaticd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\libs\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
