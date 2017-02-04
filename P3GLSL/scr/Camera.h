@@ -18,7 +18,7 @@ class Camera
 
 		float rotation;
 		float nearp = 1.0;
-		float farp = 50.0;
+		float farp = 500.0;
 		float pesoRGB = 0.5;
 		float pesoAlpha = 0.5;
 		float focalDistance = -25.0;

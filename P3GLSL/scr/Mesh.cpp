@@ -131,8 +131,9 @@ void Mesh::InitDefaultMesh() {
 }
 
 void Mesh::InitMesh(const std::string &pFile) {
+	std::cout << "ANTES IMPORT" << std::endl;
 	ImportMesh(pFile);
-	
+	std::cout << "DESPUES IMPORT" << std::endl;
 	//Creo el VAO
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -166,8 +167,8 @@ void Mesh::InitMesh(const std::string &pFile) {
 
 void Mesh::ImportMesh(const std::string &pFile) {
 	Assimp::Importer importer;
+	
 	const aiScene *scene = importer.ReadFile(pFile, aiProcessPreset_TargetRealtime_Fast);
-
 	aiMesh *mesh = scene->mMeshes[0];
 
 	numVerts = mesh->mNumFaces * 3;
@@ -179,6 +180,7 @@ void Mesh::ImportMesh(const std::string &pFile) {
 
 	int cont = 0;
 	numFaces = 0;
+	
 	for (unsigned int i = 0; i<mesh->mNumFaces; i++)
 	{
 		const aiFace& face = mesh->mFaces[i];
@@ -201,7 +203,7 @@ void Mesh::ImportMesh(const std::string &pFile) {
 			cont++;
 		}
 	}
-
+	
 	uvArray -= mesh->mNumFaces * 3 * 2;
 	normalArray -= mesh->mNumFaces * 3 * 3;
 	vertexArray -= mesh->mNumFaces * 3 * 3;

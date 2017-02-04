@@ -131,8 +131,9 @@ void initObj()
 	programa.AddLight(light1);
 	cube1.AddShader(programa);
 	cube2.AddShader(programa);
-	cube1.InitMesh("Nave.FBX");
-	cube2.InitMesh("Nave.FBX");
+	
+	cube1.InitMesh("../Mallas/Nave.FBX");
+	cube2.InitMesh("../Mallas/Nave.FBX");
 
 	scene1.AddObject(cube1);
 	scene1.AddObject(cube2);
@@ -148,15 +149,6 @@ void renderFunc()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	scene1.Render();
-	/*scene1.getObject(0).InitRender(scene1.getCamera(0));
-	scene1.getObject(0).DefaultMeshRender();
-	scene1.getObject(1).InitRender(scene1.getCamera(0));
-	scene1.getObject(1).DefaultMeshRender();*/
-	/*cube1.InitRender(camera);
-	cube1.DefaultMeshRender();
-
-	cube2.InitRender(camera);
-	cube2.DefaultMeshRender();*/
 
 	glutSwapBuffers();
 }
