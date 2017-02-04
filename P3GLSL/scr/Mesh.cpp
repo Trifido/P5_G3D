@@ -20,7 +20,11 @@ void Mesh::InitRender(Camera &camera)
 
 void Mesh::Render()
 {
-	//glDrawElements(GL_TRIANGLES, cubeNTriangleIndex * 3, GL_UNSIGNED_INT, (void*)0);
+	//Activamos el VAO del objeto, activandose todos los VBO 
+	glBindVertexArray(vao);
+	glDrawElements(GL_TRIANGLES, numFaces * 3, GL_UNSIGNED_INT, (void*)0);
+
+	glUseProgram(NULL);
 }
 
 void Mesh::DefaultMeshRender()
@@ -126,9 +130,43 @@ void Mesh::InitDefaultMesh() {
 	model = glm::mat4(1.0f);
 }
 
+void Mesh::InitMesh(const std::string &pFile) {
+	ImportMesh(pFile);
+	
+	//Creo el VAO
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
+	if ((*programa).getPos() != -1)
+	{
+		LoadVBO(posVBO, numVerts * sizeof(float) * 3, vertexArray, 3, (*programa).getPos());
+	}
+	/*if ((*programa).getColor() != -1)
+	{
+		LoadVBO(colorVBO, cubeNVertex * sizeof(float) * 3, cubeVertexColor, 3, (*programa).getColor());
+	}*/
+	if ((*programa).getNormal() != -1)
+	{
+		LoadVBO(normalVBO, numVerts * sizeof(float) * 3, normalArray, 3, (*programa).getNormal());
+	}
+	if ((*programa).getTexCoord() != -1)
+	{
+		LoadVBO(texCoordVBO, numVerts * sizeof(float) * 2, uvArray, 2, (*programa).getTexCoord());
+	}
+
+	//Creo un buffer de posiciones, en el último element array buffer activo
+	//aún no está configurado, se configurará cuando se pase a la etapa de pintar
+	LoadIBO(triangleIndexVBO, numFaces * sizeof(unsigned int) * 3, arrayIndex);
+
+	/*colorTex.LoadTexture("../img/color2.png");
+	emiTex.LoadTexture("../img/emissive.png");*/
+
+	model = glm::mat4(1.0f);
+}
+
 void Mesh::ImportMesh(const std::string &pFile) {
 	Assimp::Importer importer;
-	/*const aiScene *scene = importer.ReadFile(pFile, aiProcessPreset_TargetRealtime_Fast);
+	const aiScene *scene = importer.ReadFile(pFile, aiProcessPreset_TargetRealtime_Fast);
 
 	aiMesh *mesh = scene->mMeshes[0];
 
@@ -137,11 +175,14 @@ void Mesh::ImportMesh(const std::string &pFile) {
 	vertexArray = new float[mesh->mNumFaces * 3 * 3];
 	normalArray = new float[mesh->mNumFaces * 3 * 3];
 	uvArray = new float[mesh->mNumFaces * 3 * 2];
+	arrayIndex = new unsigned[mesh->mNumFaces * 3];
 
+	int cont = 0;
+	numFaces = 0;
 	for (unsigned int i = 0; i<mesh->mNumFaces; i++)
 	{
 		const aiFace& face = mesh->mFaces[i];
-
+		numFaces++;
 		for (int j = 0; j<3; j++)
 		{
 			aiVector3D uv = mesh->mTextureCoords[0][face.mIndices[j]];
@@ -155,10 +196,13 @@ void Mesh::ImportMesh(const std::string &pFile) {
 			aiVector3D pos = mesh->mVertices[face.mIndices[j]];
 			memcpy(vertexArray, &pos, sizeof(float) * 3);
 			vertexArray += 3;
+
+			arrayIndex[cont] = face.mIndices[j];
+			cont++;
 		}
 	}
 
 	uvArray -= mesh->mNumFaces * 3 * 2;
 	normalArray -= mesh->mNumFaces * 3 * 3;
-	vertexArray -= mesh->mNumFaces * 3 * 3;*/
+	vertexArray -= mesh->mNumFaces * 3 * 3;
 }

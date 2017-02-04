@@ -43,7 +43,9 @@ class Mesh
 		float	*vertexArray;
 		float	*normalArray;
 		float	*uvArray;
+		unsigned *arrayIndex;
 		int		numVerts;
+		int numFaces;
 
 	private:
 		void LoadVBO(unsigned int &VBO, int dataSize, const float *vertexArray, GLint size, int idAtrib);
@@ -66,6 +68,7 @@ class Mesh
 		void Render();
 		void DefaultMeshRender();
 		void InitDefaultMesh();
+		void InitMesh(const std::string &pFile);
 
 		inline void AddShader(GLSLProgram &ps) { programa = &ps; }
 		inline unsigned int GetEmiteId() { return emiTex.GetId(); }

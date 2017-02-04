@@ -37,7 +37,7 @@ void Scene::AddCamera(Camera &camera) {
 void Scene::Render(){
 	for (int i = 0; i < objects.size(); i++){
 		(*objects.at(i)).InitRender((*cameras.at(0)));
-		(*objects.at(i)).DefaultMeshRender();
+		(*objects.at(i)).Render();
 	}
 }
 

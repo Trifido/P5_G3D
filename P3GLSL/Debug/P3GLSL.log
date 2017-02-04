@@ -1,6 +1,32 @@
-﻿Compilación iniciada a las 31/01/2017 17:15:16.
+﻿Compilación iniciada a las 04/02/2017 13:22:31.
      1>Proyecto "C:\Users\Pablo\Desktop\Master\G3D\P5_G3D\P3GLSL\P3GLSL.vcxproj" en el nodo 2 (Build destinos).
-     1>Link:
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I..\libs\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt scr\auxiliar.cpp scr\Camera.cpp scr\GLSLProgram.cpp scr\Light.cpp scr\main.cpp scr\Mesh.cpp scr\Scene.cpp scr\Texture.cpp
+         Texture.cpp
+         Scene.cpp
+     1>c:\users\pablo\desktop\master\g3d\p5_g3d\p3glsl\scr\camera.h(25): warning C4305: 'inicializando' : truncamiento de 'double' a 'float'
+     1>c:\users\pablo\desktop\master\g3d\p5_g3d\p3glsl\scr\scene.cpp(10): warning C4018: '<' : no coinciden signed/unsigned
+     1>c:\users\pablo\desktop\master\g3d\p5_g3d\p3glsl\scr\scene.cpp(17): warning C4018: '<' : no coinciden signed/unsigned
+     1>c:\users\pablo\desktop\master\g3d\p5_g3d\p3glsl\scr\scene.cpp(24): warning C4018: '<' : no coinciden signed/unsigned
+     1>c:\users\pablo\desktop\master\g3d\p5_g3d\p3glsl\scr\scene.cpp(38): warning C4018: '<' : no coinciden signed/unsigned
+         Mesh.cpp
+     1>c:\users\pablo\desktop\master\g3d\p5_g3d\p3glsl\scr\camera.h(25): warning C4305: 'inicializando' : truncamiento de 'double' a 'float'
+         GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+         main.cpp
+     1>c:\users\pablo\desktop\master\g3d\p5_g3d\p3glsl\scr\camera.h(25): warning C4305: 'inicializando' : truncamiento de 'double' a 'float'
+     1>c:\users\pablo\desktop\master\g3d\p5_g3d\p3glsl\scr\main.cpp(166): warning C4244: 'argumento' : conversión de 'int' a 'float'; posible pérdida de datos
+         Light.cpp
+     1>c:\users\pablo\desktop\master\g3d\p5_g3d\p3glsl\scr\camera.h(25): warning C4305: 'inicializando' : truncamiento de 'double' a 'float'
+     1>c:\users\pablo\desktop\master\g3d\p5_g3d\p3glsl\scr\light.cpp(38): warning C4305: '+=' : truncamiento de 'double' a 'float'
+     1>c:\users\pablo\desktop\master\g3d\p5_g3d\p3glsl\scr\light.cpp(41): warning C4305: '-=' : truncamiento de 'double' a 'float'
+         GLSLProgram.cpp
+     1>c:\users\pablo\desktop\master\g3d\p5_g3d\p3glsl\scr\camera.h(25): warning C4305: 'inicializando' : truncamiento de 'double' a 'float'
+     1>c:\users\pablo\desktop\master\g3d\p5_g3d\p3glsl\scr\glslprogram.cpp(175): warning C4018: '<' : no coinciden signed/unsigned
+         Camera.cpp
+     1>c:\users\pablo\desktop\master\g3d\p5_g3d\p3glsl\scr\camera.h(25): warning C4305: 'inicializando' : truncamiento de 'double' a 'float'
+         auxiliar.cpp
+         Generando código...
+       Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Pablo\Desktop\Master\G3D\P5_G3D\P3GLSL\Debug\P3GLSL.exe" /INCREMENTAL /NOLOGO /LIBPATH:..\libs\lib FreeImage.lib opengl32.lib freeglut.lib glew32.lib "assimp-vc120-mt.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Pablo\Desktop\Master\G3D\P5_G3D\P3GLSL\Debug\P3GLSL.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Pablo\Desktop\Master\G3D\P5_G3D\P3GLSL\Debug\P3GLSL.lib" /MACHINE:X86 /SAFESEH Debug\auxiliar.obj
          Debug\Camera.obj
          Debug\GLSLProgram.obj
@@ -15,4 +41,4 @@
 
 Compilación correcta.
 
-Tiempo transcurrido 00:00:00.90
+Tiempo transcurrido 00:00:05.22

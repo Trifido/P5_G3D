@@ -131,8 +131,8 @@ void initObj()
 	programa.AddLight(light1);
 	cube1.AddShader(programa);
 	cube2.AddShader(programa);
-	cube1.InitDefaultMesh();
-	cube2.InitDefaultMesh();
+	cube1.InitMesh("Nave.FBX");
+	cube2.InitMesh("Nave.FBX");
 
 	scene1.AddObject(cube1);
 	scene1.AddObject(cube2);
