@@ -4,6 +4,8 @@ Método para eliminar objetos
 Diferenciar dir, puntual, focal(recomndable dividir en tres vectores por facilidad al pintar en el shader)
 pero es recomendable tener una luz ambiental para toda la escena
 Podemos limitar el número de luces de cada tipo
+(Para hacerlo, podemos declarar, a parte de la uniform con la luz direccional, por ejemplo, también una uniform que indique el nº de luces direccionales que hay)
+Consejo: array por cada tipo de luz con la dirección, y array por cada tipo con la intensidad
 
 Shader asociado al objeto, y no a la escena
 Consejo, que la clase Shader conozca TODOS los posibles artributos y var uniform que podríamos utilizar

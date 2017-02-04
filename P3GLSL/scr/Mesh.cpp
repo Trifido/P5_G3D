@@ -127,7 +127,7 @@ void Mesh::InitDefaultMesh() {
 }
 
 void Mesh::ImportMesh(const std::string &pFile) {
-	//Assimp::Importer importer;
+	Assimp::Importer importer;
 	/*const aiScene *scene = importer.ReadFile(pFile, aiProcessPreset_TargetRealtime_Fast);
 
 	aiMesh *mesh = scene->mMeshes[0];
