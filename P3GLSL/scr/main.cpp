@@ -27,7 +27,7 @@
 Camera camera;
 
 //Meshes
-Mesh cube1, cube2;
+Mesh cube1;// , cube2;
 
 //Variable cambio intensidad
 Light light1;
@@ -123,20 +123,20 @@ void destroy(){
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
 	cube1.Destroy(programa);
-	cube2.Destroy(programa);
+	//cube2.Destroy(programa);
 }
 
 void initObj()
 {
 	programa.AddLight(light1);
 	cube1.AddShader(programa);
-	cube2.AddShader(programa);
+	//cube2.AddShader(programa);
 	
-	cube1.InitMesh("../Mallas/Nave.FBX");
-	cube2.InitMesh("../Mallas/Nave.FBX");
+	cube1.InitMesh("../Mallas/ogre.ply");
+	//cube2.InitMesh("../Mallas/Nave.FBX");
 
 	scene1.AddObject(cube1);
-	scene1.AddObject(cube2);
+	//scene1.AddObject(cube2);
 
 	scene1.AddLight(light1);
 	
@@ -165,8 +165,8 @@ void idleFunc()
 	static float angle = 0.0;
 	angle += 0.001f;
 
-	cube1.Rotation(angle, glm::vec3(1.0f, 1.0f, 0));
-	cube2.Orbit(angle, angle, glm::vec3(3.0f, 0, 0));
+	//cube1.Rotation(angle, glm::vec3(1.0f, 1.0f, 0));
+	//cube2.Orbit(angle, angle, glm::vec3(3.0f, 0, 0));
 
 	glutPostRedisplay();
 }

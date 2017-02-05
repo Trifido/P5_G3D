@@ -28,8 +28,8 @@ class Camera
 		Camera();
 		~Camera();
 
-		inline void minusZView() {view[3].z -= 5;}
-		inline void maxZView() { view[3].z += 5; }
+		inline void minusZView() {view[3].z -= 0.5;}
+		inline void maxZView() { view[3].z += 0.5; }
 		inline void minusXView() { view[3].x -= 0.5; }
 		inline void maxXView() { view[3].x += 0.5; }
 

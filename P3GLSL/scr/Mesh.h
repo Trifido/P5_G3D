@@ -31,6 +31,8 @@ class Mesh
 		//Textures
 		Texture colorTex;
 		Texture emiTex;
+		Texture specularTex;
+		Texture normalTex;
 
 		//Model matrix
 		glm::mat4 model;
@@ -40,12 +42,13 @@ class Mesh
 		GLSLProgram	*programa;
 
 		//Assimp Mesh
-		float	*vertexArray;
-		float	*normalArray;
-		float	*uvArray;
-		unsigned *arrayIndex;
-		int		numVerts;
-		int numFaces;
+		float		*vertexArray;
+		float		*normalArray;
+		float		*uvArray;
+		float		*tangentArray;
+		unsigned	*arrayIndex;
+		int			numVerts;
+		int			numFaces;
 
 	private:
 		void LoadVBO(unsigned int &VBO, int dataSize, const float *vertexArray, GLint size, int idAtrib);
@@ -73,6 +76,8 @@ class Mesh
 		inline void AddShader(GLSLProgram &ps) { programa = &ps; }
 		inline unsigned int GetEmiteId() { return emiTex.GetId(); }
 		inline unsigned int GetColorId() { return colorTex.GetId(); }
+		inline unsigned int GetSpecularId() { return specularTex.GetId(); }
+		inline unsigned int GetNormalId() { return normalTex.GetId(); }
 
 		void ImportMesh(const std::string &pFile);
 };

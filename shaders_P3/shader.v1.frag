@@ -1,4 +1,7 @@
 #version 330 core
+#extension GL_ARB_shading_language_420pack : enable //Habilita una extension de OpenGL 4.2 para usar el layout (binding)
+
+#define MAX_SIZE 8u
 
 out vec4 outColor;
 
@@ -6,57 +9,169 @@ in vec3 color;
 in vec3 pos;
 in vec3 norm;
 in vec2 texCoord;
+//in vec3 tangent;
+
+//Texturas del objeto
 
 uniform sampler2D colorTex;
 uniform sampler2D emiTex;
+uniform sampler2D specularTex;
+uniform sampler2D normalTex;
 
-//Uniforms de luz
-uniform float inLuz;
-uniform vec3 posLuz;
+//Intensidad de luz ambiental
+uniform vec3 Ia;
+
+//Arrays de coordenadas de luces
+uniform vec3 PosPoint[MAX_SIZE];
+uniform vec3 PosSpot[MAX_SIZE];
+uniform vec3 PosDirec[MAX_SIZE];
+
+//Arrays de intensidades de luces
+uniform vec3 intPoint[MAX_SIZE];
+uniform vec3 intSpot[MAX_SIZE];
+uniform vec3 intDirec[MAX_SIZE];
+
+//Número máximo de luces
+uniform int numPoint;
+uniform int numSpot;
+uniform int numDirec;
 
 //Propiedades del objeto
 vec3 Ka;
 vec3 Kd;
 vec3 Ks;
-vec3 N;
-float alpha = 5000.0;
 vec3 Ke;
+vec3 N;
 
-//Propiedades de la luz
-vec3 Ia = vec3 (0.3);
-vec3 Id = vec3 (inLuz);
-vec3 Is = vec3 (inLuz);
+float n;
 
-vec3 shade();
+vec3 shade(int i);
+vec3 spotShade(int i);
+vec3 direcShade(int i);
+vec3 CalcBumpedNormal();
 
 void main()
 {
 	Ka = texture(colorTex, texCoord).rgb;
-	Kd = texture(colorTex, texCoord).rgb;
+	Kd = Ka;
 	Ke = texture(emiTex, texCoord).rgb;
 	Ks = vec3 (1.0);
 
 	N = normalize (norm);
+	//N = CalcBumpedNormal();
 
-	outColor = vec4(shade(), -1.0);   
+	n = 200.0;
+
+	outColor = vec4(0);
+
+	for(int i = 0; i < numPoint; i++)
+	{
+		outColor += vec4(shade(i), 1.0); 
+	}
+
+	for(int i = 0; i < numSpot; i++)
+	{
+		outColor += vec4(spotShade(i), 1.0);   
+	}
+
+	for(int i = 0; i < numDirec; i++)
+	{
+		outColor += vec4(direcShade(i), 1.0);   
+	}
 }
 
-vec3 shade()
+vec3 shade(int i)
 {
-	vec3 c = vec3(0.0);
-	c = Ia * Ka;
+	vec3 color = Ia * Ka;
 
-	vec3 L = normalize (posLuz - pos);
-	vec3 diffuse = Id * Kd * dot (L,N);
-	c += clamp(diffuse, 0.0, 1.0);
+	//Diffuse 
+	vec3 L = normalize (PosPoint[i] - pos);
+	vec3 diffuse = intPoint[i] * Kd * dot (L,N);
+	color += clamp(diffuse, 0.0, 1.0);
 	
+	//Specular
 	vec3 V = normalize (-pos);
 	vec3 R = normalize (reflect (-L,N));
 	float factor = max (dot (R,V), 0.01);
-	vec3 specular = Is*Ks*pow(factor,alpha);
-	c += clamp(specular, 0.0, 1.0);
 
-	c+=Ke;
+	vec3 specular = intPoint[i] * Ks * pow(factor,n);
+	color += clamp(specular, 0.0, 1.0);
+
+	//Color-Textura emisivo
+	color += Ke;
 	
-	return c;
+	return color;
+}
+
+vec3 spotShade(int i)
+{
+	vec3 Ip;
+	vec3 color = Ia * Ka;
+
+	vec3 D = normalize(PosSpot[i]);
+	vec3 L = normalize(vec3(PosSpot[i] - pos));
+
+	vec3 diff = intSpot[i] * Kd * dot(N, L);	
+
+	float radiAng = 15.0 * 3.1416 / 180.0;
+	float cosAng = cos(radiAng);
+	float escPro = dot(D, L);
+
+	if( escPro > cosAng){
+
+		vec3 V = normalize(-pos);
+		vec3 R = reflect (-L, N); //Se usa -L porque L es la dirección contraria del rayo.
+		float Sfactor = max (dot(R, V), 0.0001);
+		Sfactor = pow (Sfactor,n);
+		vec3 spec = intSpot[i] * Ks * Sfactor;
+
+		Ip = pow( (escPro - cosAng) / (1.0 - cosAng) , n) * (diff + spec);
+
+	}
+	else{
+		Ip = vec3(0.0);
+		color += diff;
+	}
+
+	color += clamp(Ip, 0.0, 1.0);
+	color += Ke;
+
+	return color;
+}
+
+vec3 direcShade(int i)
+{
+	vec3 color = Ia * Ka;
+
+	//Diffuse 
+	vec3 L = normalize (PosDirec[i]);
+	vec3 diffuse = intDirec[i] * Kd * dot (L,N);
+	color += clamp(diffuse, 0.0, 1.0);
+	
+	//Specular
+	vec3 V = normalize (-pos);
+	vec3 R = normalize (reflect (-L,N));
+	float factor = max (dot (R,V), 0.0001);
+
+	vec3 specular = intDirec[i] * Ks * pow(factor,n);
+	color += clamp(specular, 0.0, 1.0);
+
+	//Color-Textura emisivo
+	color += Ke;
+	
+	return color;
+}
+
+vec3 CalcBumpedNormal()
+{
+//    vec3 Tangent = normalize(tangent);
+//    Tangent = normalize(Tangent - dot(Tangent, N) * N);
+//   vec3 Bitangent = cross(Tangent, N);
+//    vec3 BumpMapNormal = texture(normalTex, texCoord).xyz;
+//    BumpMapNormal = 2.0 * BumpMapNormal - vec3(1.0, 1.0, 1.0);
+    vec3 NewNormal;
+//    mat3 TBN = mat3(Tangent, Bitangent, N);
+//    NewNormal = TBN * BumpMapNormal;
+//    NewNormal = normalize(NewNormal);
+    return NewNormal;
 }

@@ -25,9 +25,6 @@ private:
 	int inNormal;
 	int inTexCoord;
 
-	int inLuz;
-	int posLuz;
-
 	int uModelViewMat;
 	int uModelViewProjMat;
 	int uNormalMat;
@@ -35,17 +32,39 @@ private:
 	int uColorTex;
 	int uEmiTex;
 
+	//Uniform luz ambiental
+	int uIntAmbiental;
+	//Uniforms luz puntual
+	int uPosPoint, uIntPoint, uNumPoint;
+	//Uniforms luz spot
+	int uPosSpot, uIntSpot, uNumSpot;
+	//Uniform luz direccional
+	int uPosDirec, uIntDirec, uNumDirec;
+
+	//Num. total Lights
+	int numPoint, numSpot, numDirec;
+
 	std::vector<Light*> lights;
+
+	glm::vec3 *posPointLights;
+	glm::vec3 *intPointLights;
+	glm::vec3 *posSpotLights;
+	glm::vec3 *intSpotLights;
+	glm::vec3 *posDirLights;
+	glm::vec3 *intDirLights;
 
 private:
 	GLuint LoadShader(const char *fileName, GLenum type);
 	
-	void AddUnif3fv(glm::vec3 vect);
-	void AddUnif1f(float f);
+	void AddUnifNumLight(int idNum, int num);
+	void AddUnifPosLight(int idUnif, glm::vec3 *vect, int sizeArray);
+	void AddUnifIntLight(int idUnif, glm::vec3 *vect, int sizeArray);
 	void AddUnifTexC(unsigned int color);
 	void AddUnifTexE(unsigned int emi);
+	void AddUnif1fAmbiental(glm::vec3 ambient);
 
 public:
+	GLSLProgram();
 	void InitShader(const char *vname, const char *fname);
 	void Destroy();
 	void UseProgram();

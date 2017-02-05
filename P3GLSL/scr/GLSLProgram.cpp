@@ -1,5 +1,10 @@
 #include "GLSLProgram.h"
 
+GLSLProgram::GLSLProgram()
+{
+	numPoint = numSpot = numDirec = 0;
+}
+
 void GLSLProgram::InitShader(const char *vname, const char *fname){
 	//Creamos un shader de vertices y de fragmentos
 	vshader = LoadShader(vname, GL_VERTEX_SHADER);
@@ -34,9 +39,25 @@ void GLSLProgram::InitShader(const char *vname, const char *fname){
 	//Inicializamos las uniform que se van a usar
 	uColorTex = glGetUniformLocation(program, "colorTex");
 	uEmiTex = glGetUniformLocation(program, "emiTex");
+
 	//Uniform Luz
-	posLuz = glGetUniformLocation(program, "posLuz");
-	inLuz = glGetUniformLocation(program, "inLuz");
+	//Uniform Luz Ambiental
+	uIntAmbiental = glGetUniformLocation(program, "Ia");
+
+	//Uniforms luz puntual
+	uPosPoint = glGetUniformLocation(program, "PosPoint");
+	uIntPoint = glGetUniformLocation(program, "intPoint");
+	uNumPoint = glGetUniformLocation(program, "numPoint");
+
+	//Uniforms luz Spot
+	uPosSpot = glGetUniformLocation(program, "PosSpot");
+	uIntSpot = glGetUniformLocation(program, "intSpot");
+	uNumSpot = glGetUniformLocation(program, "numSpot");
+
+	//Uniforms luz Direccional
+	uPosDirec = glGetUniformLocation(program, "PosDirec");
+	uIntDirec = glGetUniformLocation(program, "intDirec");
+	uNumDirec = glGetUniformLocation(program, "numDirec");
 
 	//Preguntamos el status de linkado
 	int linked;
@@ -125,12 +146,20 @@ void GLSLProgram::AddUnifMat4fvN(glm::mat4 &mat){
 	glUniformMatrix4fv(uNormalMat, 1, GL_FALSE, &(mat[0][0]));
 }
 
-void GLSLProgram::AddUnif3fv(glm::vec3 vect){
-	glUniform3fv(posLuz, 1, &(vect[0]));
+void GLSLProgram::AddUnifNumLight(int idNum, int num) {
+	glUniform1i(idNum, num);
 }
 
-void GLSLProgram::AddUnif1f(float f){
-	glUniform1f(inLuz, f);
+void GLSLProgram::AddUnifPosLight(int idUnif, glm::vec3 *vect, int sizeArray){
+	glUniform3fv(idUnif, sizeArray, &(vect[0][0]));
+}
+
+void GLSLProgram::AddUnifIntLight(int idUnif, glm::vec3 *vect, int sizeArray){
+	glUniform3fv(idUnif, sizeArray, &(vect[0][0]));
+}
+
+void GLSLProgram::AddUnif1fAmbiental(glm::vec3 ambient) {
+	glUniform3fv(uIntAmbiental, 1, &(ambient[0]));
 }
 
 void GLSLProgram::AddUnifTex(unsigned int color, unsigned int emi){
@@ -168,12 +197,64 @@ int GLSLProgram::getTexCoord(){
 }
 
 void GLSLProgram::AddLight(Light &light) {
-	lights.push_back(&light);
+	if (light.GetType() == POINT_LIGHT) 
+	{
+		numPoint ++;
+		if(numPoint < 8)
+			lights.push_back(&light);
+	}
+	else if (light.GetType() == SPOT_LIGHT)
+	{
+		numSpot ++;
+		if (numSpot < 8)
+			lights.push_back(&light);
+	}
+	else
+	{
+		numDirec ++;
+		if (numDirec < 8)
+			lights.push_back(&light);
+	}
 }
 
 void GLSLProgram::AddUnifLight() {
-	for (int i = 0; i < lights.size(); i++) {
-		AddUnif3fv((*lights.at(i)).GetPosition());
-		AddUnif1f((*lights.at(i)).GetIntensity());
+	AddUnif1fAmbiental(glm::vec3(0.13f));		//LUZ AMBIENTAL
+
+	AddUnifNumLight(uNumPoint, numPoint);
+	AddUnifNumLight(uNumSpot, numSpot);
+	AddUnifNumLight(uNumDirec, numDirec);
+
+	posPointLights = new glm::vec3[numPoint];
+	intPointLights = new glm::vec3[numPoint];
+	posSpotLights = new glm::vec3[numSpot];
+	intSpotLights = new glm::vec3[numSpot];
+	posDirLights = new glm::vec3[numDirec];
+	intDirLights = new glm::vec3[numDirec];
+
+	for (unsigned int i = 0; i < lights.size(); i++) {
+		if ((*lights.at(i)).GetType() == POINT_LIGHT) 
+		{
+			posPointLights[i] = (*lights.at(i)).GetPosition();
+			intPointLights[i] = (*lights.at(i)).GetIntensity();
+		}
+		else if ((*lights.at(i)).GetType() == SPOT_LIGHT)
+		{
+			posSpotLights[i] = (*lights.at(i)).GetPosition();
+			intSpotLights[i] = (*lights.at(i)).GetIntensity();
+		}
+		else
+		{
+			posDirLights[i] = (*lights.at(i)).GetPosition();
+			intDirLights[i] = (*lights.at(i)).GetIntensity();
+		}
 	}
+
+	AddUnifPosLight(uPosPoint, posPointLights, numPoint);
+	AddUnifIntLight(uIntPoint, intPointLights, numPoint);
+
+	AddUnifPosLight(uPosSpot, posSpotLights, numSpot);
+	AddUnifIntLight(uIntSpot, intSpotLights, numSpot);
+
+	AddUnifPosLight(uPosDirec, posDirLights, numDirec);
+	AddUnifIntLight(uIntDirec, intDirLights, numDirec);
 }

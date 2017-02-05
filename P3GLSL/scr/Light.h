@@ -18,7 +18,7 @@ enum TypeLight
 class Light
 {
 	private:
-		float valorIntensidad;
+		glm::vec3 intensity;
 		glm::vec3 lightCoord;
 		glm::vec3 lightPosShader;
 		TypeLight type;
@@ -29,11 +29,14 @@ class Light
 
 	public:
 		Light();
+		Light(TypeLight type);
 		void LightController(unsigned char key, Camera camera);
 
-		inline glm::vec3 GetPosition() { return lightPosShader; }
-		inline float GetIntensity() { return valorIntensidad; }
-		inline int GetType() { return type; }
+		inline void SetPosition(glm::vec3 newPos) { this->lightCoord = newPos; }
+		inline glm::vec3 GetPosition() { return this->lightPosShader; }
+		inline glm::vec3 GetIntensity() { return this->intensity; }
+		inline void SetIntensity(glm::vec3 newColor) { this->intensity = newColor; }
+		inline int GetType() { return this->type; }
 };
 
 #endif

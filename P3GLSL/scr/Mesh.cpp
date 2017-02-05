@@ -84,6 +84,7 @@ void Mesh::Destroy(GLSLProgram &programa)
 
 	colorTex.Destroy();
 	emiTex.Destroy();
+	specularTex.Destroy();
 
 	glBindVertexArray(0);
 	glDeleteVertexArrays(1, &vao);
@@ -126,14 +127,14 @@ void Mesh::InitDefaultMesh() {
 
 	colorTex.LoadTexture("../img/color2.png");
 	emiTex.LoadTexture("../img/emissive.png");
+	specularTex.LoadTexture("../img/specMap.png");
+	normalTex.LoadTexture("../img/normal.png");
 
 	model = glm::mat4(1.0f);
 }
 
 void Mesh::InitMesh(const std::string &pFile) {
-	std::cout << "ANTES IMPORT" << std::endl;
 	ImportMesh(pFile);
-	std::cout << "DESPUES IMPORT" << std::endl;
 	//Creo el VAO
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -142,10 +143,10 @@ void Mesh::InitMesh(const std::string &pFile) {
 	{
 		LoadVBO(posVBO, numVerts * sizeof(float) * 3, vertexArray, 3, (*programa).getPos());
 	}
-	/*if ((*programa).getColor() != -1)
+	if ((*programa).getColor() != -1)
 	{
 		LoadVBO(colorVBO, cubeNVertex * sizeof(float) * 3, cubeVertexColor, 3, (*programa).getColor());
-	}*/
+	}
 	if ((*programa).getNormal() != -1)
 	{
 		LoadVBO(normalVBO, numVerts * sizeof(float) * 3, normalArray, 3, (*programa).getNormal());
@@ -159,16 +160,21 @@ void Mesh::InitMesh(const std::string &pFile) {
 	//aún no está configurado, se configurará cuando se pase a la etapa de pintar
 	LoadIBO(triangleIndexVBO, numFaces * sizeof(unsigned int) * 3, arrayIndex);
 
-	/*colorTex.LoadTexture("../img/color2.png");
-	emiTex.LoadTexture("../img/emissive.png");*/
+	colorTex.LoadTexture("../img/diffuse.png");
+	specularTex.LoadTexture("../img/bump.png");
+	//emiTex.LoadTexture("../img/emissive.png");
 
 	model = glm::mat4(1.0f);
 }
 
 void Mesh::ImportMesh(const std::string &pFile) {
 	Assimp::Importer importer;
+
+	importer.SetPropertyInteger(AI_CONFIG_PP_RVC_FLAGS,
+		aiComponent_CAMERAS | aiComponent_LIGHTS | aiComponent_COLORS |
+		aiComponent_BONEWEIGHTS | aiComponent_ANIMATIONS);
 	
-	const aiScene *scene = importer.ReadFile(pFile, aiProcessPreset_TargetRealtime_Fast);
+	const aiScene *scene = importer.ReadFile(pFile, aiProcess_GenSmoothNormals | aiProcess_RemoveComponent | aiProcess_Triangulate | aiProcess_CalcTangentSpace);
 	aiMesh *mesh = scene->mMeshes[0];
 
 	numVerts = mesh->mNumFaces * 3;
@@ -177,10 +183,11 @@ void Mesh::ImportMesh(const std::string &pFile) {
 	normalArray = new float[mesh->mNumFaces * 3 * 3];
 	uvArray = new float[mesh->mNumFaces * 3 * 2];
 	arrayIndex = new unsigned[mesh->mNumFaces * 3];
+	tangentArray = new float[mesh->mNumFaces * 3 * 3];
 
 	int cont = 0;
 	numFaces = 0;
-	
+	std::cout << "hola\n";
 	for (unsigned int i = 0; i<mesh->mNumFaces; i++)
 	{
 		const aiFace& face = mesh->mFaces[i];
@@ -195,6 +202,10 @@ void Mesh::ImportMesh(const std::string &pFile) {
 			memcpy(normalArray, &normal, sizeof(float) * 3);
 			normalArray += 3;
 
+			//aiVector3D tangent = mesh->mTangents[face.mIndices[j]];
+			//memcpy(tangentArray, &tangent, sizeof(float) * 3);
+			//tangentArray += 3;
+			
 			aiVector3D pos = mesh->mVertices[face.mIndices[j]];
 			memcpy(vertexArray, &pos, sizeof(float) * 3);
 			vertexArray += 3;
@@ -203,8 +214,9 @@ void Mesh::ImportMesh(const std::string &pFile) {
 			cont++;
 		}
 	}
-	
+	std::cout << "adios\n";
 	uvArray -= mesh->mNumFaces * 3 * 2;
 	normalArray -= mesh->mNumFaces * 3 * 3;
-	vertexArray -= mesh->mNumFaces * 3 * 3;
+	vertexArray -= mesh->mNumFaces * 3 * 3;/*
+	tangentArray -= mesh->mNumFaces * 3 * 3;*/
 }

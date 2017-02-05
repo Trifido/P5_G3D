@@ -1,7 +1,18 @@
 #include "Light.h"
 
 Light::Light() {
-	valorIntensidad = 0.5f;
+	type = POINT_LIGHT;
+	intensity = glm::vec3(0.5f);
+	lightCoord = glm::vec3(0.0f);
+	lightPosShader = glm::vec3(1.0f);
+}
+
+Light::Light(TypeLight type) {
+	this->type = type;
+	if(type == SPOT_LIGHT)
+		intensity = glm::vec3(1.0f);
+	else
+		intensity = glm::vec3(0.5f);
 	lightCoord = glm::vec3(0.0f);
 	lightPosShader = glm::vec3(1.0f);
 }
@@ -35,10 +46,10 @@ void Light::ChangeIntensity(unsigned char key) {
 	switch (key)
 	{
 		case '+':
-			valorIntensidad += 0.1;
+			intensity += 0.1;
 			break;
 		case '-':
-			valorIntensidad -= 0.1;
+			intensity -= 0.1;
 			break;
 		default:
 			break;
