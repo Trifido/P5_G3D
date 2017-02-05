@@ -51,6 +51,7 @@ public:
 	void AddLight(Light &light);
 	void AddCamera(Camera &camera);
 	void Render();
+	void Animation();
 
 	Mesh getObject(int i);
 	Camera getCamera(int i);

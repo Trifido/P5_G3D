@@ -27,7 +27,7 @@
 Camera camera;
 
 //Meshes
-Mesh cube1;// , cube2;
+Mesh cube1, cube2;
 
 //Variable cambio intensidad
 Light light1;
@@ -36,6 +36,13 @@ glm::vec2 lightCoord = glm::vec2(0.0f);
 glm::vec3 lightPos = glm::vec3(1.0f);
 
 GLSLProgram programa;
+
+
+
+GLSLProgram programa2;
+Light light2;
+
+
 
 Scene scene1;
 
@@ -59,6 +66,7 @@ int main(int argc, char** argv)
 	initContext(argc, argv);
 	initOGL();
 	programa.InitShader("../shaders_P3/shader.v1.vert", "../shaders_P3/shader.v1.frag"); //v0 sin textura, V1 con textura
+	programa2.InitShader("../shaders_P3/shader.v1.vert", "../shaders_P3/shader.v1.frag");
 	initObj();
 
 	glutMainLoop();
@@ -118,28 +126,33 @@ void initOGL(){
 
 void destroy(){
 	programa.Destroy();
+	programa2.Destroy();
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
 	cube1.Destroy(programa);
-	//cube2.Destroy(programa);
+	cube2.Destroy(programa2);
 }
 
 void initObj()
 {
+	light2.SetIntensity(glm::vec3(1.0, 0.0, 0.0));
 	programa.AddLight(light1);
+	programa2.AddLight(light2);
+
 	cube1.AddShader(programa);
-	//cube2.AddShader(programa);
+	cube2.AddShader(programa2);
 	
 	//cube1.InitDefaultMesh();
 	cube1.InitMesh("../Mallas/ogre.ply");
-	//cube2.InitMesh("../Mallas/Nave.FBX");
+	cube2.InitDefaultMesh();
 
 	scene1.AddObject(cube1);
-	//scene1.AddObject(cube2);
+	scene1.AddObject(cube2);
 
 	scene1.AddLight(light1);
+	scene1.AddLight(light2);
 	
 	scene1.AddCamera(camera);
 
@@ -162,12 +175,7 @@ void resizeFunc(int width, int height)
 
 void idleFunc()
 {
-	//Cambio la matriz model
-	static float angle = 0.0;
-	angle += 0.001f;
-
-	//cube1.Rotation(angle, glm::vec3(1.0f, 1.0f, 0));
-	//cube2.Orbit(angle, angle, glm::vec3(3.0f, 0, 0));
+	scene1.Animation();
 
 	glutPostRedisplay();
 }

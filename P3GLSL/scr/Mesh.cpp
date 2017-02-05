@@ -27,15 +27,6 @@ void Mesh::Render()
 	glUseProgram(NULL);
 }
 
-void Mesh::DefaultMeshRender()
-{	
-	//Activamos el VAO del objeto, activandose todos los VBO 
-	glBindVertexArray(vao);
-	glDrawElements(GL_TRIANGLES, cubeNTriangleIndex * 3, GL_UNSIGNED_INT, (void*)0);
-
-	glUseProgram(NULL);
-}
-
 void Mesh::LoadVBO(unsigned int &VBO, int dataSize, const float *vertexArray, GLint size, int idAtrib)
 {
 	glGenBuffers(1, &VBO);
@@ -134,6 +125,8 @@ void Mesh::InitDefaultMesh() {
 	emiTex.LoadTexture("../img/emissive.png");
 	specularTex.LoadTexture("../img/specMap.png");
 	normalTex.LoadTexture("../img/normal.png");
+
+	numFaces = cubeNTriangleIndex;
 
 	model = glm::mat4(1.0f);
 }

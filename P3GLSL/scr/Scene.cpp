@@ -43,6 +43,15 @@ void Scene::Render(){
 	}
 }
 
+void Scene::Animation(){
+	//Cambio la matriz model
+	static float angle = 0.0;
+	angle += 0.001f;
+
+	//cube1.Rotation(angle, glm::vec3(1.0f, 1.0f, 0));
+	(*objects.at(1)).Orbit(angle, angle, glm::vec3(3.0f, 0, 0));
+}
+
 Mesh Scene::getObject(int i){
 	return (*objects.at(i));
 }
