@@ -22,6 +22,7 @@ void GLSLProgram::InitShader(const char *vname, const char *fname){
 	glBindAttribLocation(program, 1, "inColor");
 	glBindAttribLocation(program, 2, "inNormal");
 	glBindAttribLocation(program, 3, "inTexCoord");
+	glBindAttribLocation(program, 4, "inTangent");
 
 	//LINKADO
 	glLinkProgram(program);
@@ -31,6 +32,7 @@ void GLSLProgram::InitShader(const char *vname, const char *fname){
 	inColor = glGetAttribLocation(program, "inColor");
 	inNormal = glGetAttribLocation(program, "inNormal");
 	inTexCoord = glGetAttribLocation(program, "inTexCoord");
+	inTangent = glGetAttribLocation(program, "inTangent");
 
 	//Las variable uniform se declaran despues del linkado
 	uNormalMat = glGetUniformLocation(program, "normal");
@@ -194,6 +196,10 @@ int GLSLProgram::getNormal(){
 
 int GLSLProgram::getTexCoord(){
 	return inTexCoord;
+}
+
+int GLSLProgram::getTangent(){
+	return inTangent;
 }
 
 void GLSLProgram::AddLight(Light &light) {

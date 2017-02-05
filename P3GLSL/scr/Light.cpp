@@ -21,10 +21,10 @@ void Light::MoveLight(unsigned char key, Camera camera) {
 	switch (key)
 	{
 		case 'i':
-			lightCoord[1] += 0.1f;
+			lightCoord[1] -= 0.1f;
 			break;
 		case 'k':
-			lightCoord[1] -= 0.1f;
+			lightCoord[1] += 0.1f;
 			break;
 		case 'j':
 			lightCoord[0] -= 0.1f;

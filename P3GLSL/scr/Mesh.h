@@ -26,6 +26,7 @@ class Mesh
 		unsigned int colorVBO;
 		unsigned int normalVBO;
 		unsigned int texCoordVBO;
+		unsigned int tangentVBO;
 		unsigned int triangleIndexVBO;
 
 		//Textures
@@ -55,6 +56,7 @@ class Mesh
 		void LoadIBO(unsigned int &IBO, int dataSize, const unsigned int *indexArray);
 		void Rotate(float &angle, glm::vec3 axis);
 		void Translate(glm::vec3 cord);
+		glm::vec3 CalcBumpedNormal();
 
 	public:
 		Mesh();	//Default Mesh (Cube)

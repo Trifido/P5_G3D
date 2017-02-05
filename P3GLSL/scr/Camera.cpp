@@ -22,17 +22,14 @@ void Camera::MoveCamera(unsigned char key) {
 			minusXView();
 			break;
 		case 'e':
-			//rotation = 0.0523599f;
 			IncrementRot();
 			break;
 		case 'q':
-			//rotation = -0.0523599f;
 			DecrementRot();
 			break;
 	}
 
 	if (key == 'e' || key == 'q') {
-		//camera.GetView() = glm::rotate(glm::mat4(1.0f), rotation, glm::vec3(0, 1, 0)) * camera.GetView();
 		RotateCamera();
 	}
 }

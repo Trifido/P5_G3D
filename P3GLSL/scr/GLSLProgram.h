@@ -24,6 +24,7 @@ private:
 	int inColor;
 	int inNormal;
 	int inTexCoord;
+	int inTangent;
 
 	int uModelViewMat;
 	int uModelViewProjMat;
@@ -79,6 +80,7 @@ public:
 	int getColor();
 	int getNormal();
 	int getTexCoord();
+	int getTangent();
 
 	void AddLight(Light &light);
 };

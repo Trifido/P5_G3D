@@ -80,6 +80,7 @@ void Mesh::Destroy(GLSLProgram &programa)
 	if (programa.getColor() != -1) glDeleteBuffers(1, &colorVBO);
 	if (programa.getNormal() != -1) glDeleteBuffers(1, &normalVBO);
 	if (programa.getTexCoord() != -1) glDeleteBuffers(1, &texCoordVBO);
+	if (programa.getTangent() != -1) glDeleteBuffers(1, &tangentVBO);
 	glDeleteBuffers(1, &triangleIndexVBO);
 
 	colorTex.Destroy();
@@ -96,6 +97,7 @@ Mesh::~Mesh()
 	glDeleteBuffers(1, &colorVBO);
 	glDeleteBuffers(1, &normalVBO);
 	glDeleteBuffers(1, &texCoordVBO);
+	glDeleteBuffers(1, &tangentVBO);
 	glDeleteBuffers(1, &triangleIndexVBO);
 }
 
@@ -145,7 +147,7 @@ void Mesh::InitMesh(const std::string &pFile) {
 	}
 	if ((*programa).getColor() != -1)
 	{
-		LoadVBO(colorVBO, cubeNVertex * sizeof(float) * 3, cubeVertexColor, 3, (*programa).getColor());
+		LoadVBO(colorVBO, cubeNVertex * sizeof(float) * 3, cubeVertexColor, 3, (*programa).getColor()); //YO LO COMENTÉ PORQUE NO SABIA PERO SI HAY Q USARLO, cubeNvertex será numvertex, no?
 	}
 	if ((*programa).getNormal() != -1)
 	{
@@ -154,6 +156,10 @@ void Mesh::InitMesh(const std::string &pFile) {
 	if ((*programa).getTexCoord() != -1)
 	{
 		LoadVBO(texCoordVBO, numVerts * sizeof(float) * 2, uvArray, 2, (*programa).getTexCoord());
+	}
+	if ((*programa).getTangent() != -1)
+	{
+		LoadVBO(tangentVBO, numVerts * sizeof(float) * 2, tangentArray, 3, (*programa).getTangent());
 	}
 
 	//Creo un buffer de posiciones, en el último element array buffer activo
@@ -172,7 +178,7 @@ void Mesh::ImportMesh(const std::string &pFile) {
 
 	importer.SetPropertyInteger(AI_CONFIG_PP_RVC_FLAGS,
 		aiComponent_CAMERAS | aiComponent_LIGHTS | aiComponent_COLORS |
-		aiComponent_BONEWEIGHTS | aiComponent_ANIMATIONS);
+		aiComponent_BONEWEIGHTS | aiComponent_ANIMATIONS | aiComponent_TANGENTS_AND_BITANGENTS);
 	
 	const aiScene *scene = importer.ReadFile(pFile, aiProcess_GenSmoothNormals | aiProcess_RemoveComponent | aiProcess_Triangulate | aiProcess_CalcTangentSpace);
 	aiMesh *mesh = scene->mMeshes[0];
@@ -187,7 +193,7 @@ void Mesh::ImportMesh(const std::string &pFile) {
 
 	int cont = 0;
 	numFaces = 0;
-	std::cout << "hola\n";
+
 	for (unsigned int i = 0; i<mesh->mNumFaces; i++)
 	{
 		const aiFace& face = mesh->mFaces[i];
@@ -202,9 +208,9 @@ void Mesh::ImportMesh(const std::string &pFile) {
 			memcpy(normalArray, &normal, sizeof(float) * 3);
 			normalArray += 3;
 
-			//aiVector3D tangent = mesh->mTangents[face.mIndices[j]];
-			//memcpy(tangentArray, &tangent, sizeof(float) * 3);
-			//tangentArray += 3;
+			aiVector3D tangent = mesh->mTangents[face.mIndices[j]];
+			memcpy(tangentArray, &tangent, sizeof(float) * 3);
+			tangentArray += 3;
 			
 			aiVector3D pos = mesh->mVertices[face.mIndices[j]];
 			memcpy(vertexArray, &pos, sizeof(float) * 3);
@@ -214,9 +220,9 @@ void Mesh::ImportMesh(const std::string &pFile) {
 			cont++;
 		}
 	}
-	std::cout << "adios\n";
+
 	uvArray -= mesh->mNumFaces * 3 * 2;
 	normalArray -= mesh->mNumFaces * 3 * 3;
-	vertexArray -= mesh->mNumFaces * 3 * 3;/*
-	tangentArray -= mesh->mNumFaces * 3 * 3;*/
+	vertexArray -= mesh->mNumFaces * 3 * 3;
+	tangentArray -= mesh->mNumFaces * 3 * 3;
 }
