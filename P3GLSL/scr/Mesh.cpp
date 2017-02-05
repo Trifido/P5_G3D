@@ -14,7 +14,7 @@ void Mesh::InitRender(Camera &camera)
 	camera.SetNormal(glm::transpose(glm::inverse(camera.GetModelView())));
 
 	(*programa).AddUnif(camera.GetModelView(), camera.GetModelViewProj(), camera.GetNormal());
-	(*programa).AddUnifTex(GetColorId(), GetEmiteId());
+	(*programa).AddUnifTex(GetColorId(), GetEmiteId(), GetSpecularId(), GetNormalId());
 	(*programa).AddUnifLight();
 }
 
@@ -171,7 +171,6 @@ void Mesh::InitMesh(const std::string &pFile) {
 
 	colorTex.LoadTexture("../img/diffuse.png");
 	specularTex.LoadTexture("../img/bump.png");
-	//emiTex.LoadTexture("../img/emissive.png");
 
 	model = glm::mat4(1.0f);
 }

@@ -55,12 +55,14 @@ void main()
 	Ka = texture(colorTex, texCoord).rgb;
 	Kd = Ka;
 	Ke = texture(emiTex, texCoord).rgb;
-	Ks = vec3 (0.5);
-
+	Ks = texture(specularTex, texCoord).xyz;
+	
+	n = 200.0;
+	
 	N = normalize (norm);
 	N = CalcBumpedNormal();
 
-	n = 200.0;
+	
 
 	outColor = vec4(0);
 

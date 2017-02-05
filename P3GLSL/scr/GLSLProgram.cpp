@@ -41,6 +41,8 @@ void GLSLProgram::InitShader(const char *vname, const char *fname){
 	//Inicializamos las uniform que se van a usar
 	uColorTex = glGetUniformLocation(program, "colorTex");
 	uEmiTex = glGetUniformLocation(program, "emiTex");
+	uSpecularTex = glGetUniformLocation(program, "specularTex");
+	uNormalTex = glGetUniformLocation(program, "normalTex");
 
 	//Uniform Luz
 	//Uniform Luz Ambiental
@@ -164,9 +166,11 @@ void GLSLProgram::AddUnif1fAmbiental(glm::vec3 ambient) {
 	glUniform3fv(uIntAmbiental, 1, &(ambient[0]));
 }
 
-void GLSLProgram::AddUnifTex(unsigned int color, unsigned int emi){
+void GLSLProgram::AddUnifTex(unsigned int color, unsigned int emi, unsigned int spec, unsigned int nor){
 	AddUnifTexC(color);
 	AddUnifTexE(emi);
+	AddUnifTexS(spec);
+	AddUnifTexN(nor);
 }
 
 void GLSLProgram::AddUnifTexC(unsigned int color){
@@ -180,6 +184,18 @@ void GLSLProgram::AddUnifTexE(unsigned int emi){
 	glActiveTexture(GL_TEXTURE0 + 1);
 	glBindTexture(GL_TEXTURE_2D, emi);
 	glUniform1i(uEmiTex, 1);
+}
+
+void GLSLProgram::AddUnifTexS(unsigned int spec){
+	glActiveTexture(GL_TEXTURE0 + 2);
+	glBindTexture(GL_TEXTURE_2D, spec);
+	glUniform1i(uSpecularTex, 2);
+}
+
+void GLSLProgram::AddUnifTexN(unsigned int nor){
+	glActiveTexture(GL_TEXTURE0 + 3);
+	glBindTexture(GL_TEXTURE_2D, nor);
+	glUniform1i(uNormalTex, 3);
 }
 
 int GLSLProgram::getPos(){

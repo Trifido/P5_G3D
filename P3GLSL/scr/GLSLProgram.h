@@ -32,6 +32,8 @@ private:
 
 	int uColorTex;
 	int uEmiTex;
+	int uSpecularTex;
+	int uNormalTex;
 
 	//Uniform luz ambiental
 	int uIntAmbiental;
@@ -62,6 +64,8 @@ private:
 	void AddUnifIntLight(int idUnif, glm::vec3 *vect, int sizeArray);
 	void AddUnifTexC(unsigned int color);
 	void AddUnifTexE(unsigned int emi);
+	void AddUnifTexS(unsigned int spec);
+	void AddUnifTexN(unsigned int nor);
 	void AddUnif1fAmbiental(glm::vec3 ambient);
 
 public:
@@ -73,7 +77,7 @@ public:
 	void AddUnifMat4fvMV(glm::mat4 &mat);
 	void AddUnifMat4fvMVP(glm::mat4 &mat);
 	void AddUnifMat4fvN(glm::mat4 &mat);
-	void AddUnifTex(unsigned int color, unsigned int emi);
+	void AddUnifTex(unsigned int color, unsigned int emi, unsigned int spec, unsigned int nor);
 	void AddUnifLight();
 
 	int getPos();
