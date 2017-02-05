@@ -132,7 +132,8 @@ void initObj()
 	cube1.AddShader(programa);
 	//cube2.AddShader(programa);
 	
-	cube1.InitMesh("../Mallas/ogre.ply");
+	cube1.InitDefaultMesh();
+	//cube1.InitMesh("../Mallas/ogre.ply");
 	//cube2.InitMesh("../Mallas/Nave.FBX");
 
 	scene1.AddObject(cube1);

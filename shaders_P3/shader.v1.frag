@@ -55,9 +55,9 @@ void main()
 	Ka = texture(colorTex, texCoord).rgb;
 	Kd = Ka;
 	Ke = texture(emiTex, texCoord).rgb;
-	Ks = vec3 (1.0);
+	Ks = vec3 (0.5);
 
-	//N = normalize (norm);
+	N = normalize (norm);
 	N = CalcBumpedNormal();
 
 	n = 200.0;
@@ -166,7 +166,7 @@ vec3 CalcBumpedNormal()
 {
     vec3 Tangent = normalize(tangent);
     Tangent = normalize(Tangent - dot(Tangent, N) * N);
-   vec3 Bitangent = cross(Tangent, N);
+    vec3 Bitangent = cross(Tangent, N);
     vec3 BumpMapNormal = texture(normalTex, texCoord).xyz;
     BumpMapNormal = 2.0 * BumpMapNormal - vec3(1.0, 1.0, 1.0);
     vec3 NewNormal;

@@ -121,13 +121,16 @@ void Mesh::InitDefaultMesh() {
 	if ((*programa).getTexCoord() != -1)
 	{
 		LoadVBO(texCoordVBO, cubeNVertex * sizeof(float) * 2, cubeVertexTexCoord, 2, (*programa).getTexCoord());
+	}if ((*programa).getTangent() != -1)
+	{
+		LoadVBO(tangentVBO, cubeNVertex * sizeof(float) * 3, cubeVertexTangent, 3, (*programa).getTangent());
 	}
 
 	//Creo un buffer de posiciones, en el último element array buffer activo
 	//aún no está configurado, se configurará cuando se pase a la etapa de pintar
 	LoadIBO(triangleIndexVBO, cubeNTriangleIndex * sizeof(unsigned int) * 3, cubeTriangleIndex);
 
-	colorTex.LoadTexture("../img/color2.png");
+	colorTex.LoadTexture("../img/color.png");
 	emiTex.LoadTexture("../img/emissive.png");
 	specularTex.LoadTexture("../img/specMap.png");
 	normalTex.LoadTexture("../img/normal.png");
@@ -147,7 +150,7 @@ void Mesh::InitMesh(const std::string &pFile) {
 	}
 	if ((*programa).getColor() != -1)
 	{
-		LoadVBO(colorVBO, cubeNVertex * sizeof(float) * 3, cubeVertexColor, 3, (*programa).getColor()); //YO LO COMENTÉ PORQUE NO SABIA PERO SI HAY Q USARLO, cubeNvertex será numvertex, no?
+		LoadVBO(colorVBO, cubeNVertex * sizeof(float) * 3, cubeVertexColor, 3, (*programa).getColor());
 	}
 	if ((*programa).getNormal() != -1)
 	{
@@ -159,7 +162,7 @@ void Mesh::InitMesh(const std::string &pFile) {
 	}
 	if ((*programa).getTangent() != -1)
 	{
-		LoadVBO(tangentVBO, numVerts * sizeof(float) * 2, tangentArray, 3, (*programa).getTangent());
+		LoadVBO(tangentVBO, numVerts * sizeof(float) * 3, tangentArray, 3, (*programa).getTangent());
 	}
 
 	//Creo un buffer de posiciones, en el último element array buffer activo
