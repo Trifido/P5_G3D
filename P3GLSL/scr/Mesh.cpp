@@ -2,7 +2,24 @@
 
 Mesh::Mesh()
 {
+	colorTex = Texture("../img/color.png");
+	emiTex = Texture("../img/emissive.png");
+	specularTex = Texture("../img/specMap.png");
+	normalTex = Texture("../img/normal.png");
+}
 
+Mesh::Mesh(char *nameTex1, char *nameTex2)
+{
+	colorTex = Texture(nameTex1);
+	specularTex = Texture(nameTex2);
+}
+
+Mesh::Mesh(char *nameTex1, char *nameTex2, char *nameTex3, char *nameTex4)
+{
+	colorTex = Texture(nameTex1);
+	emiTex = Texture(nameTex2);
+	specularTex = Texture(nameTex3);
+	normalTex = Texture(nameTex4);
 }
 
 void Mesh::InitRender(Camera &camera)
@@ -45,7 +62,6 @@ void Mesh::LoadIBO(unsigned int &IBO, int dataSize, const unsigned int *indexArr
 
 void Mesh::Rotate(float &angle, glm::vec3 axis)
 {
-	//angle = (angle > 2.0f * 3.14159) ? 0.0 : angle + 0.0001f;
 	model *= glm::rotate(glm::mat4(1.0f), angle, axis);
 }
 
@@ -77,6 +93,7 @@ void Mesh::Destroy(GLSLProgram &programa)
 	colorTex.Destroy();
 	emiTex.Destroy();
 	specularTex.Destroy();
+	normalTex.Destroy();
 
 	glBindVertexArray(0);
 	glDeleteVertexArrays(1, &vao);
@@ -117,14 +134,12 @@ void Mesh::InitDefaultMesh() {
 		LoadVBO(tangentVBO, cubeNVertex * sizeof(float) * 3, cubeVertexTangent, 3, (*programa).getTangent());
 	}
 
-	//Creo un buffer de posiciones, en el último element array buffer activo
-	//aún no está configurado, se configurará cuando se pase a la etapa de pintar
 	LoadIBO(triangleIndexVBO, cubeNTriangleIndex * sizeof(unsigned int) * 3, cubeTriangleIndex);
 
-	colorTex.LoadTexture("../img/color.png");
-	emiTex.LoadTexture("../img/emissive.png");
-	specularTex.LoadTexture("../img/specMap.png");
-	normalTex.LoadTexture("../img/normal.png");
+	colorTex.LoadTexture();
+	emiTex.LoadTexture();
+	specularTex.LoadTexture();
+	normalTex.LoadTexture();
 
 	numFaces = cubeNTriangleIndex;
 
@@ -158,12 +173,10 @@ void Mesh::InitMesh(const std::string &pFile) {
 		LoadVBO(tangentVBO, numVerts * sizeof(float) * 3, tangentArray, 3, (*programa).getTangent());
 	}
 
-	//Creo un buffer de posiciones, en el último element array buffer activo
-	//aún no está configurado, se configurará cuando se pase a la etapa de pintar
 	LoadIBO(triangleIndexVBO, numFaces * sizeof(unsigned int) * 3, arrayIndex);
 
-	colorTex.LoadTexture("../img/diffuse.png");
-	specularTex.LoadTexture("../img/bump.png");
+	colorTex.LoadTexture();
+	specularTex.LoadTexture();
 
 	model = glm::mat4(1.0f);
 }

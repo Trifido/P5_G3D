@@ -48,6 +48,7 @@ private:
 	int numPoint, numSpot, numDirec;
 
 	std::vector<Light*> lights;
+	glm::vec3 ambientLight;
 
 	glm::vec3 *posPointLights;
 	glm::vec3 *intPointLights;
@@ -87,6 +88,7 @@ public:
 	int getTangent();
 
 	void AddLight(Light &light);
+	inline void AddAmbientLight(glm::vec3 &ai){ ambientLight = ai; }
 };
 
 

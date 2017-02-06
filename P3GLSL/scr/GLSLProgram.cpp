@@ -240,8 +240,7 @@ void GLSLProgram::AddLight(Light &light) {
 }
 
 void GLSLProgram::AddUnifLight() {
-	AddUnif1fAmbiental(glm::vec3(0.13f));		//LUZ AMBIENTAL
-
+	AddUnif1fAmbiental(ambientLight);		//LUZ AMBIENTAL
 	AddUnifNumLight(uNumPoint, numPoint);
 	AddUnifNumLight(uNumSpot, numSpot);
 	AddUnifNumLight(uNumDirec, numDirec);

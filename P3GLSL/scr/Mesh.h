@@ -12,12 +12,6 @@
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h> 
 
-//enum Type
-//{
-//		ASSIMP_MODEL = 0,
-//		PRIMITIVE_MODEL = 1
-//};
-
 class Mesh
 {
 	private:
@@ -56,13 +50,11 @@ class Mesh
 		void LoadIBO(unsigned int &IBO, int dataSize, const unsigned int *indexArray);
 		void Rotate(float &angle, glm::vec3 axis);
 		void Translate(glm::vec3 cord);
-		glm::vec3 CalcBumpedNormal();
 
 	public:
 		Mesh();	//Default Mesh (Cube)
-//		Mesh(Type type, const char *filename, const char *fileColorTex);
-////		Mesh(Type type, const char *filename, const char *fileEmiTex);
-//		Mesh(Type type, const char *filename, const char *fileColorTex, const char *fileEmiTex);
+		Mesh(char *nameTex1, char *nameTex2);
+		Mesh(char *nameTex1, char *nameTex2, char *nameTex3, char *nameTex4);
 		~Mesh();
 		
 		void Destroy(GLSLProgram &programa);
@@ -71,7 +63,6 @@ class Mesh
 		void Orbit(float &internAngle, float &externAngle, glm::vec3 externRadius);
 		void InitRender(Camera &camera);
 		void Render();
-		void DefaultMeshRender();
 		void InitDefaultMesh();
 		void InitMesh(const std::string &pFile);
 

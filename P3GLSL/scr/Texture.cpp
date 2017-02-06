@@ -2,19 +2,20 @@
 
 Texture::Texture(char *filename)
 {
-	LoadTexture(filename);
+	//LoadTexture(filename);
+	name = filename;
 }
 
-void Texture::LoadTexture(char *filename)
+void Texture::LoadTexture()
 {
 	unsigned char *map;
 	unsigned int w, h;
 	//Primero se carga la textura desde fichero
-	map = loadTexture(filename, w, h);
+	map = loadTexture(name, w, h);
 	if (!map)
 	{
 		std::cout << "Error cargando el fichero: "
-			<< filename << std::endl;
+			<< name << std::endl;
 		exit(-1);
 	}
 

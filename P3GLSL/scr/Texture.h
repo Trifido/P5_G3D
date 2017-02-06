@@ -9,11 +9,12 @@ class Texture
 {
 	private:
 		unsigned int id;
+		char *name;
 	public:
 		Texture(){};
 		Texture(char *filename);
 		
-		void LoadTexture(char *filename);
+		void LoadTexture();
 		inline unsigned int GetId(){ return this->id; }
 		void Destroy();
 

@@ -28,6 +28,7 @@ private:
 	std::vector <Mesh*> objects;
 	std::vector <Light*> lights;
 	std::vector <Camera*> cameras;
+	glm::vec3 ambientLight;
 
 	//std::vector <>;
 	glm::vec3 ia;
@@ -43,15 +44,15 @@ private:
 	int numPoint = 0;
 	int numFocal = 0;
 
-	
-
 public:
-	Scene(){};
+	Scene();
 	void AddObject(Mesh &object);
 	void AddLight(Light &light);
 	void AddCamera(Camera &camera);
 	void Render();
 	void Animation();
+	void Destroy();
+	inline glm::vec3 getAmbientLight() { return ambientLight; }
 
 	Mesh getObject(int i);
 	Camera getCamera(int i);

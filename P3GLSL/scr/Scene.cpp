@@ -1,5 +1,10 @@
 #include "Scene.h"
 
+Scene::Scene()
+{
+	ambientLight = glm::vec3(0.13f);
+}
+
 void Scene::AddObject(Mesh &object) {
 	objects.push_back(&object);
 }
@@ -49,7 +54,15 @@ void Scene::Animation(){
 	angle += 0.001f;
 
 	//cube1.Rotation(angle, glm::vec3(1.0f, 1.0f, 0));
-	(*objects.at(1)).Orbit(angle, angle, glm::vec3(3.0f, 0, 0));
+	(*objects.at(1)).Orbit(angle, angle, glm::vec3(-3.0f, 0, 0));
+	(*objects.at(2)).Orbit(angle, angle, glm::vec3(3.0f, 0, 0));
+	(*objects.at(3)).Orbit(angle, angle, glm::vec3(0, 3.0f, 0));
+	(*objects.at(4)).Orbit(angle, angle, glm::vec3(0, -3.0f, 0));
+}
+
+void Scene::Destroy()
+{
+	
 }
 
 Mesh Scene::getObject(int i){
